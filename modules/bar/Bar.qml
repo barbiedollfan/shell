@@ -1,15 +1,15 @@
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Hyprland
-import Quickshell.Services.UPower
 import Quickshell.Io
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Effects
 import qs.modules.launcher
 import qs.modules.wallpaper
 import qs.modules.status
+import qs.modules.bar.components
 import qs.common
+import qs.common.components
 import qs.services
 
 Scope {
@@ -31,13 +31,9 @@ Scope {
                 right: true
             }
 
-            color: "transparent"
+            color: Styling.colors.surface
 
-            Rectangle {
-                anchors.fill: parent
-                color: Styling.colors.surface
-                opacity: 0.9
-            }
+            HyprlandWindow.opacity: 0.95
 
             Row {
                 anchors.left: parent.left
@@ -59,9 +55,7 @@ Scope {
 
                 VerticalSeparator {}
 
-                WeatherInfo {
-                    anchors.verticalCenter: parent.verticalCenter
-                } 
+                WeatherInfo {} 
             }
 
             Row {
@@ -69,34 +63,34 @@ Scope {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.rightMargin: Styling.infoEntrySpacing
                 spacing: Styling.infoEntrySpacing
-    
-                KeyboardInfo {
-                    anchors.verticalCenter: parent.verticalCenter
-                } 
+
+                KeyboardInfo {} 
 
                 VerticalSeparator {}
 
-                VolumeInfo {
-                    anchors.verticalCenter: parent.verticalCenter
-                } 
+                VolumeInfo {}
 
                 VerticalSeparator {}
 
-                StorageInfo {
-                    anchors.verticalCenter: parent.verticalCenter
+                StorageInfo {}
+
+                VerticalSeparator {}
+
+                MemoryInfo {}
+
+                VerticalSeparator {}
+
+                BatteryInfo {}
+
+                VerticalSeparator {}
+                
+                Row {
+                    spacing: 2
+
+                    NetworkInfo {}
+                    
+                    BluetoothInfo {}
                 }
-
-                VerticalSeparator {}
-
-                MemoryInfo {
-                    anchors.verticalCenter: parent.verticalCenter
-                } 
-
-                VerticalSeparator {}
-
-                BatteryInfo {
-                    anchors.verticalCenter: parent.verticalCenter
-                } 
             }
 
             LazyLoader {
@@ -180,10 +174,33 @@ Scope {
     }
 
     component VerticalSeparator: Rectangle {
-            implicitHeight: Styling.pillHeight * 0.6
-            implicitWidth: 2
-            anchors.verticalCenter: parent.verticalCenter
-            radius: Styling.rounding
-            color: Styling.colors.secondaryContainer
+        implicitHeight: Styling.pillHeight * 0.6
+        implicitWidth: 2
+        anchors.verticalCenter: parent.verticalCenter
+        radius: Styling.rounding
+        color: Styling.colors.secondaryContainer
+    }
+
+    component IconAction: Item {
+        id: root
+        implicitHeight: content.implicitHeight
+        implicitWidth: content.implicitWidth
+
+        property alias iconName: content.name
+
+        signal action 
+
+        Icon {
+            id: content
+            iconSize: 17
+            anchors.centerIn: parent
         }
+
+        MouseArea {
+            id: area
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: action()
+        }
+    }
 }

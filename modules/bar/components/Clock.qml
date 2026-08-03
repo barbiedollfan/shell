@@ -1,6 +1,7 @@
 import Quickshell
 import QtQuick
 import qs.common
+import qs.common.components
 import qs.services
 
 Item {
@@ -27,16 +28,14 @@ Item {
         anchors.centerIn: parent
         spacing: Styling.gapsInMedium
 
-        Text {
+        StyledText {
             text: date
             anchors.verticalCenter: parent.verticalCenter
-            color: Styling.colors.onSurface
         }
 
-        Text {
+        StyledText {
             text: time
             anchors.verticalCenter: parent.verticalCenter
-            color: Styling.colors.onSurface
         }
     }
 }

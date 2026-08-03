@@ -1,0 +1,24 @@
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import qs.common
+import qs.common.components
+import qs.services
+
+StyledPopup {
+    Row {
+        anchors.centerIn: parent
+        spacing: 100
+
+        StyledText {
+            text: "Wi-Fi"
+            font.bold: true
+            font.pixelSize: 15
+        }
+
+        StyledSwitch {
+            checked: Network.enabled
+            onClicked: Network.toggleWifi()
+        }
+    }
+}

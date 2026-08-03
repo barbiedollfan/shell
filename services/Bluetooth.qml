@@ -14,7 +14,7 @@ Singleton {
         return Icons.bluetoothEnabled;
     }
 
-    function toggleBluetooth() {
+    function toggle() {
         adapter.enabled = !adapter.enabled
     }
 }

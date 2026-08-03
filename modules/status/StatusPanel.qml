@@ -1,6 +1,7 @@
 import Quickshell
 import QtQuick
 import qs.common
+import qs.common.components
 import qs.services
 
 Rectangle {
@@ -11,29 +12,23 @@ Rectangle {
 
     Row {
         spacing: 10
-        Text {
+        StyledText {
             text: SystemInfo.os 
-            color: Styling.colors.onSurface
         }
-        Text {
+        StyledText {
             text: SystemInfo.architecture
-            color: Styling.colors.onSurface
         }
-        Text {
+        StyledText {
             text: SystemInfo.device
-            color: Styling.colors.onSurface
         }
-        Text {
+        StyledText {
             text: SystemInfo.host
-            color: Styling.colors.onSurface
         }
-        Text {
+        StyledText {
             text: SystemInfo.user
-            color: Styling.colors.onSurface
         }
-        Text {
+        StyledText {
             text: SystemInfo.uptime
-            color: Styling.colors.onSurface
         }
     }
 }

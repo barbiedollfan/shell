@@ -9,10 +9,11 @@ Singleton {
     property bool wallpaperSwitcherOpen: false
     property bool statusPanelOpen: false
 
-    property bool controlPanelOpen: false
     property bool batteryPopupOpen: false
     property bool memoryPopupOpen: false
     property bool storagePopupOpen: false
+    property bool networkPopupOpen: false
+    property bool bluetoothPopupOpen: false
 
     GlobalShortcut {
         appid: "quickshell"

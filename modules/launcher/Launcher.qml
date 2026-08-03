@@ -105,11 +105,10 @@ Rectangle {
             }
         }
 
-        Text {
+        StyledText {
             text: root.bottomIndex > 0 ? "..." : ""
             font.pixelSize: 8
             Layout.alignment: Qt.AlignHCenter
-            color: Styling.colors.onSurface
         }
         Repeater {
             model: appObjectsSorted
@@ -142,29 +141,26 @@ Rectangle {
                         spacing: Styling.gapsInSmall
                         Layout.fillWidth: true
 
-                        Text {
+                        StyledText {
                             text: modelData.name
                             Layout.fillWidth: true
                             font.bold: true
                             elide: Text.ElideRight
-                            color: Styling.colors.onSurface
                         }
-                        Text {
+                        StyledText {
                             text: modelData.description
                             Layout.fillWidth: true
                             elide: Text.ElideRight
-                            color: Styling.colors.onSurface
                         }
                     }
                 }
             }
 
         }
-        Text {
+        StyledText {
             text: root.topIndex < root.totalResults - 1 ? "..." : ""
             font.pixelSize: 8
             Layout.alignment: Qt.AlignHCenter
-            color: Styling.colors.onSurface
         }
     }
 

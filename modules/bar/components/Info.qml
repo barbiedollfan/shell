@@ -1,5 +1,4 @@
 import Quickshell
-import Quickshell.Services.UPower
 import QtQuick
 import qs.common
 import qs.common.components
@@ -7,10 +6,12 @@ import qs.services
 import qs.modules.bar.popups
 
 Item {
-    id: root
-
     implicitHeight: content.implicitHeight
     implicitWidth: content.implicitWidth
+
+    property alias iconName: icon.name
+    property alias text: text.text
+    signal toggled(MouseEvent mouse)
 
     Row {
         id: content
@@ -18,32 +19,21 @@ Item {
         spacing: Styling.gapsInSmall
 
         Icon {
-            name: Battery.icon
+            id: icon
             anchors.verticalCenter: parent.verticalCenter
         }
 
-        Text {
-            text: Battery.percentage + "%"
-            color: Styling.colors.onSurface
+        StyledText {
+            id: text
             anchors.verticalCenter: parent.verticalCenter
         }
     }
 
     MouseArea {
         anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
         cursorShape: Qt.PointingHandCursor
-        onClicked: GlobalShortcuts.batteryPopupOpen = !GlobalShortcuts.batteryPopupOpen
-    }
-
-    LazyLoader {
-        id: batteryPopupLoader
-        loading: true
-        active: GlobalShortcuts.batteryPopupOpen
-
-        BatteryPopup {
-            anchor.item: root
-            anchor.margins.top: root.height + 15
-            visible: GlobalShortcuts.batteryPopupOpen
-        }
+        onClicked: (mouse) => toggled(mouse)
     }
 }
+

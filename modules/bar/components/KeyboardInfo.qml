@@ -5,41 +5,17 @@ import QtQuick.Controls
 import qs.common
 import qs.common.components
 
-Item {
+Info {
     id: root
-
-    implicitWidth: content.implicitWidth
-    implicitHeight: content.implicitHeight
 
     property var keymapAbbreviations: {}
     property string currentKeymap: ""
     property bool showAbbreviated: true
 
-    Row {
-        id: content
-        anchors.centerIn: parent
-        spacing: Styling.gapsInSmall
-        
-        Icon {
-            name: Icons.keyboard
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Text {
-            text: root.showAbbreviated ? root.currentKeymap ? root.keymapAbbreviations[root.currentKeymap] : "" : root.currentKeymap
-            anchors.verticalCenter: parent.verticalCenter
-            color: Styling.colors.onSurface
-        }
-
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        cursorShape: Qt.PointingHandCursor
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onClicked: (mouse) => { 
-            if (mouse.button === Qt.RightButton) root.showAbbreviated = !root.showAbbreviated
-        }
+    iconName: Icons.keyboard
+    text: showAbbreviated ? currentKeymap ? keymapAbbreviations[currentKeymap] : "" : currentKeymap
+    onToggled: (mouse) => {
+        if (mouse.button === Qt.RightButton) showAbbreviated = !showAbbreviated
     }
 
     Socket {
