@@ -1,26 +1,43 @@
 pragma Singleton
+import QtQml
 import Quickshell
 import Quickshell.Networking
 import qs.common
 
 Singleton {
-    property NetworkDevice device: Networking.devices?.values.length > 0 ? Networking.devices.values[0] : null ?? null
-    property ObjectModel networks: device?.networks ?? null
-    property bool connected: device?.connected ?? false
+    property NetworkDevice wifiDevice: Networking.devices?.values.find((device) => device.type === DeviceType.Wifi) ?? null
+
+    property bool connected: wifiDevice?.connected ?? false
     property bool enabled: Networking?.wifiEnabled ?? false
-    property Network connectedNetwork: connected ? (networks.values.find(network => network.connected) ?? null) : null
+    property bool scanning: wifiDevice?.scannerEnabled ?? false
+    property string status: ConnectionState.toString(wifiDevice?.state)
+
+    property list<Network> networks: wifiDevice?.networks.values ?? null
+    property list<Network> knownNetworks: networks?.filter((network) => network?.known) ?? null
+    property list<Network> unknownNetworks: networks?.filter((network) => !network?.known) ?? null
+    property Network connectedNetwork: connected ? (networks?.find(network => network?.connected) ?? null) : null ?? null
     property string connectedNetworkSsid: connected ? connectedNetwork?.name ?? "" : ""
     property string icon: {
         if (!enabled) return Icons.wifiDisabled;
         if (!connected) return Icons.wifiUnconnected;
-        const signalStrength = connectedNetwork?.signalStrength;
-        if (signalStrength < 0.25) return Icons.wifiNone;
-        if (signalStrength < 0.5) return Icons.wifiLow;
-        if (signalStrength < 0.75) return Icons.wifiMedium;
+        return wifiIcon(connectedNetwork?.signalStrength);
+    }
+
+    function wifiIcon(strength: real): string {
+        if (strength < 0.25) return Icons.wifiNone;
+        if (strength < 0.5) return Icons.wifiLow;
+        if (strength < 0.75) return Icons.wifiMedium;
         return Icons.wifiHigh;
     }
 
     function toggleWifi() {
         Networking.wifiEnabled = !Networking.wifiEnabled;
+    }
+
+    Connections {
+        target: GlobalShortcuts
+        function onNetworkPopupOpenChanged() {
+            if (GlobalShortcuts.networkPopupOpen) wifiDevice.scannerEnabled = true;
+        }
     }
 }

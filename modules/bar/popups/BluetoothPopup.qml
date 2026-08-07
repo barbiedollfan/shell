@@ -6,7 +6,7 @@ import qs.common.components
 import qs.services
 
 StyledPopup {
-    Row {
+    content: RowLayout {
         anchors.centerIn: parent
         spacing: 100
 

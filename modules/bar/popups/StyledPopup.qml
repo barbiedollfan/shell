@@ -2,27 +2,28 @@ import Quickshell
 import QtQuick
 import qs.common
 
-LazyLoader {
+Loader {
     id: root
-    default property Item content
+    required property Item content
     required property Item anchorItem
 
-    component: PopupWindow {
+    sourceComponent: PopupWindow {
         anchor.item: anchorItem
         anchor.margins.top: anchorItem.height + 10
 
         implicitHeight: outline.implicitHeight
         implicitWidth: outline.implicitWidth
         color: "transparent"
-        visible: root.active
+        visible: root.status === Loader.Ready
 
         Rectangle {
             id: outline
-            implicitHeight: content ? content.implicitHeight + 2 * Styling.gapsOut : 100
-            implicitWidth: content ? content.implicitWidth + 2 * Styling.gapsOut : 100
+            implicitHeight: content.implicitHeight + 2 * Styling.gapsOut
+            implicitWidth: content.implicitWidth + 2 * Styling.gapsOut
             anchors.centerIn: parent
             radius: Styling.rounding
             color: Styling.colors.surface
+            // border.color: Styling.colors.outline
             children: [content]
         }
     }

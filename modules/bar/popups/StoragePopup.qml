@@ -10,7 +10,7 @@ StyledPopup {
     property string displayedUnit: "GiB";
     property string usageUnit: Storage?.usageUnit;
 
-    ColumnLayout {
+    content: ColumnLayout {
         anchors.centerIn: parent
         spacing: 10
 
@@ -18,6 +18,7 @@ StyledPopup {
             text: "Usage"
             font.bold: true
             font.pixelSize: 13
+            color: Styling.colors.secondary
         }
 
         Repeater {
@@ -47,6 +48,7 @@ StyledPopup {
             text: "Breakdown"
             font.bold: true
             font.pixelSize: 13
+            color: Styling.colors.secondary
         }
 
         Repeater {

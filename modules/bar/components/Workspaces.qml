@@ -39,14 +39,16 @@ Row {
                     anchors.verticalCenter: parent.verticalCenter
 
                     Repeater {
-                        model: {
-                            const instances = {};
-                            toplevels.forEach((toplevel) => {
-                                const id = toplevel.wayland?.appId;
-                                if (instances.hasOwnProperty(id)) instances[id]++;
-                                else instances[id] = 1;
-                            });
-                            return Object.entries(instances);
+                        model: ScriptModel {
+                            values: {
+                                const instances = {};
+                                toplevels.forEach((toplevel) => {
+                                    const id = toplevel.wayland?.appId;
+                                    if (instances.hasOwnProperty(id)) instances[id]++;
+                                    else instances[id] = 1;
+                                });
+                                return Object.entries(instances);
+                            }
                         }
 
                         Column {
@@ -64,20 +66,22 @@ Row {
                                     anchors.centerIn: parent
                                 }
                             }
-                            
-                            Row {
-                                spacing: 2
+
+                            Loader {
+                                active: modelData[1] > 1
                                 anchors.horizontalCenter: parent.horizontalCenter
-                                visible: modelData[1] > 1
+                                sourceComponent: Row {
+                                    spacing: 2
 
-                                Repeater {
-                                    model: modelData[1]
+                                    Repeater {
+                                        model: modelData[1]
 
-                                    Rectangle {
-                                        color: Styling.colors.onSurface
-                                        implicitHeight: 2
-                                        implicitWidth: implicitHeight
-                                        radius: height / 2
+                                        Rectangle {
+                                            color: Styling.colors.onSurface
+                                            implicitHeight: 2
+                                            implicitWidth: implicitHeight
+                                            radius: height / 2
+                                        }
                                     }
                                 }
                             }

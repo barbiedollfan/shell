@@ -4,13 +4,19 @@ import qs.common
 
 Switch {
     id: control
-    property int implicitHeight: 25
-    property int implicitWidth: 45
-    property int indicatorGap: 3
+    property int pillHeight: 25
+    property int pillWidth: 45
+    property int indicatorGap: 2
+    padding: 0
+
+    contentItem: Item {
+        implicitHeight: control.pillHeight
+        implicitWidth: control.pillWidth
+    }
 
     indicator: Rectangle {
-        implicitHeight: control.implicitHeight
-        implicitWidth: control.implicitWidth
+        implicitHeight: control.pillHeight
+        implicitWidth: control.pillWidth
         color: control.checked ? Styling.colors.primaryContainer : Styling.colors.surfaceContainerHighest
         radius: height / 2
 
@@ -19,7 +25,7 @@ Switch {
             height: parent.height - 2 * indicatorGap
             width: height
             anchors.verticalCenter: parent.verticalCenter
-            color: Styling.colors.onPrimaryContainer
+            color: Styling.colors.onSurface
             radius: height / 2
         }
     }

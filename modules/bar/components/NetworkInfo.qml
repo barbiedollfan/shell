@@ -2,7 +2,7 @@ import QtQuick
 import qs.common
 import qs.common.components
 import qs.services
-import qs.modules.bar.popups
+import qs.modules.bar.popups.network
 
 Info {
     id: networkInfo

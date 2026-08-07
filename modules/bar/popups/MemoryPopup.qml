@@ -11,22 +11,20 @@ StyledPopup {
     property string displayedProcUnit: "MiB"
     property string dataUnit: Memory.unit
 
-    ColumnLayout {
+    content: ColumnLayout {
         anchors.centerIn: parent
         spacing: 10
 
-        Text {
+        StyledText {
             property string formattedUsed: Utils.convertRounded(Memory.used, dataUnit, displayedUsageUnit, 1)
             property string formattedTotal: Utils.convertRounded(Memory.total, dataUnit, displayedUsageUnit, 1)
 
             text: `Used: ${formattedUsed} / ${formattedTotal} ${displayedUsageUnit} (${Memory.usedPercent}%)`
-            color: Styling.colors.onSurface
             font.pixelSize: 13
         }
 
-        Text {
+        StyledText {
             text: `Quickshell: ${Utils.convertRounded(Memory.qsUsed, dataUnit, displayedProcUnit, 1)} ${displayedProcUnit}`
-            color: Styling.colors.onSurface
             font.pixelSize: 13
         }
 
@@ -38,11 +36,11 @@ StyledPopup {
             color: Styling.colors.surfaceContainer
         }
 
-        Text {
+        StyledText {
             text: "Processes"
             font.pixelSize: 13
             font.bold: true
-            color: Styling.colors.onSurface
+            color: Styling.colors.secondary
         }
 
         GridLayout {
@@ -53,9 +51,8 @@ StyledPopup {
             Repeater {
                 model: Memory.processes.reduce((accumulator, current) => accumulator.concat([String(current.pid), current.command, `${Utils.convertRounded(current.used, dataUnit, displayedProcUnit, 1)} ${displayedProcUnit}`]), []) 
 
-                Text {
+                StyledText {
                     text: modelData
-                    color: Styling.colors.onSurface
 
                     required property string modelData
                 }

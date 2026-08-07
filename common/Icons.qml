@@ -52,7 +52,8 @@ Singleton {
     readonly property string notificationsEnabled: "notificationsEnabled"
     readonly property string notificationsDisabled: "notificationsDisabled"
 
-    readonly property string deleteAll: "trashSweep"
+    readonly property string trashAll: "trashSweep"
+    readonly property string trash: "trash"
     readonly property string power: "power"
 
     readonly property string clearDay: "sunBright"
@@ -66,6 +67,8 @@ Singleton {
     readonly property string lightSnow: "cloudSnow"
     readonly property string snowy: "snowflake"
     readonly property string thunderstorm: "cloudThunder"
+
+    readonly property string check: "check"
 
 
     function getPowerProfileIcon(powerProfile: var): string {
